@@ -18,10 +18,8 @@ package com.melessoftware.testing.concurrent;
 import static java.util.concurrent.Executors.callable;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
@@ -29,19 +27,52 @@ public class TestThread {
 
     private final ExecutorService executorService = createExecutorService();
 
+    /**
+     * Run the provided {@link Runnable} on this thread and wait until it's complete.
+     * If {@link Runnable#run()} throws an exception it will be rethrown, in the calling
+     * thread, by proceed.
+     *
+     * @param runnable to run
+     */
     public void proceed(Runnable runnable) throws Throwable {
-        proceed(callable(runnable));
+        step(runnable).get();
     }
 
+    /**
+     * Run the provided {@link Callable} on this thread and wait until it's complete.
+     * If {@link java.util.concurrent.Callable#call()} throws an exception it will be rethrown,
+     * in the calling thread, by proceed.
+     *
+     * @param callable to run
+     * @return the return value from the callable
+     */
     public <X> X proceed(Callable<X> callable) throws Throwable {
-        final Future<X> futureX = executorService.submit(callable);
-        final X x;
-        try {
-            x = futureX.get();
-        } catch (ExecutionException e) {
-            throw e.getCause();
-        }
-        return x;
+        return step(callable).get();
+    }
+
+    /**
+     * Run the provided {@link Runnable} on this thread without waiting for the Runnable to complete.
+     * If the run method throws an exception it will be rethrown by calling
+     * {@link com.melessoftware.testing.concurrent.Result#get()}
+     *
+     * @param runnable to run
+     * @return the result of this operation
+     */
+    public Result<?> step(Runnable runnable) throws Throwable {
+        return step(callable(runnable));
+    }
+
+    /**
+     * Run the provided {@link Callable} on this thread without waiting for the Callable to complete.
+     * The return value from executing the call can be retrieved by calling
+     * {@link com.melessoftware.testing.concurrent.Result#get()}. If there is an exception thrown during the
+     * execution of {@link java.util.concurrent.Callable#call()} it will be thrown when calling <code>get()</code>.
+     *
+     * @param callable to run
+     * @return the result of this operation
+     */
+    public <X> Result<X> step(Callable<X> callable) {
+        return new Result<>(executorService.submit(callable));
     }
 
     void close() {
