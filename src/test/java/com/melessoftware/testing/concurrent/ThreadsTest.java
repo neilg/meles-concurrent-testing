@@ -3,6 +3,7 @@ package com.melessoftware.testing.concurrent;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.util.concurrent.Callable;
 
@@ -53,17 +54,28 @@ public class ThreadsTest {
 
     @Test
     public void afterStatementAllThreadsAreClosed() throws Throwable {
-        final Threads localThreads = new Threads();
 
         final TestThread[] testThreadsHolder = new TestThread[20];
+        final Threads localThreads = new Threads();
 
-        final Description description = Description.createTestDescription(ThreadsTest.class, "fake test");
-        final Statement statement = new Statement() {
+        final Statement statement = localThreads.apply(
+                createThreadsStatement(testThreadsHolder, localThreads),
+                mock(Description.class));
+
+        statement.evaluate();
+
+        for (int i = 0; i < testThreadsHolder.length; i++) {
+            assertTrue("test thread " + i + " is not closed", testThreadsHolder[i].isClosed());
+        }
+    }
+
+    private Statement createThreadsStatement(final TestThread[] testThreadsHolder, final Threads localThreads) {
+        return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                for (int i = 0; i < testThreadsHolder.length; i++) {
-                    testThreadsHolder[i] = localThreads.create();
-                    testThreadsHolder[i].proceed(new Runnable() {
+                for (int i1 = 0; i1 < testThreadsHolder.length; i1++) {
+                    testThreadsHolder[i1] = localThreads.create();
+                    testThreadsHolder[i1].proceed(new Runnable() {
                         @Override
                         public void run() {
                         }
@@ -71,12 +83,6 @@ public class ThreadsTest {
                 }
             }
         };
-
-        localThreads.apply(statement, description).evaluate();
-
-        for (int i = 0; i < testThreadsHolder.length; i++) {
-            assertTrue("test thread " + i + " is not closed", testThreadsHolder[i].isClosed());
-        }
     }
 
 }
