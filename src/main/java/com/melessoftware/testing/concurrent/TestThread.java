@@ -52,6 +52,10 @@ public class TestThread {
         executorService.awaitTermination(timeout, timeUnit);
     }
 
+    boolean isClosed() {
+        return executorService.isTerminated();
+    }
+
     private static ExecutorService createExecutorService() {
         return Executors.newSingleThreadExecutor(new ThreadFactory() {
             private volatile boolean threadCreated = false;
