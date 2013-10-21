@@ -1,65 +1,36 @@
 package com.melessoftware.testing.concurrent;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-import java.util.concurrent.Callable;
-
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 public class ThreadsTest {
 
-    @Rule
-    public Threads threads = new Threads();
-
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Test
-    public void valueIsReturnedFromProceed() throws Throwable {
-        final TestThread thread = threads.create();
+    public void baseStatementIsCalled() throws Throwable {
 
-        final String returned = thread.proceed(new Callable<String>() {
-            @Override
-            public String call() {
-                return "uiwfrrf";
-            }
-        });
+        final Threads threads = new Threads();
 
-        assertThat(returned, is("uiwfrrf"));
-    }
+        final Statement base = mock(Statement.class);
+        final Description description = mock(Description.class);
 
-    @Test
-    public void exceptionIsThrowFromProceed() throws Throwable {
-        final TestThread thread = threads.create();
+        threads.apply(base, description).evaluate();
 
-        class TestException extends RuntimeException {
-        }
-
-        expectedException.expect(TestException.class);
-
-        thread.proceed(new Runnable() {
-            @Override
-            public void run() {
-                throw new TestException();
-            }
-        });
+        verify(base).evaluate();
     }
 
     @Test
     public void afterStatementAllThreadsAreClosed() throws Throwable {
 
         final TestThread[] testThreadsHolder = new TestThread[20];
-        final Threads localThreads = new Threads();
+        final Threads threads = new Threads();
 
-        final Statement statement = localThreads.apply(
-                createThreadsStatement(testThreadsHolder, localThreads),
+        final Statement statement = threads.apply(
+                createThreadsStatement(testThreadsHolder, threads),
                 mock(Description.class));
 
         statement.evaluate();
