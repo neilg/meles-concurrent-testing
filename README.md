@@ -1,7 +1,7 @@
 Meles Concurrent Testing
 ========================
 
-Meles concurrent testing is a library to help with tests of concurrency in junit.
+Meles concurrent testing is a library to help with junit tests that require the use of multiple threads.
 
 Examples
 --------
