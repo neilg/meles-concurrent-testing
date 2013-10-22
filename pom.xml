@@ -23,14 +23,31 @@
     <groupId>com.melessoftware.testing</groupId>
     <artifactId>meles-concurrent-testing</artifactId>
     <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Meles Concurrent Testing</name>
+    <description>A library to help with multi-threaded testing in junit</description>
+    <url>https://github.com/neilg/meles-concurrent-testing</url>
 
     <licenses>
         <license>
             <name>GNU GENERAL PUBLIC LICENSE Version 3</name>
-            <url>http://www.gnu.org/licenses/gpl.txt</url>
+            <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <scm>
+        <url>https://github.com/neilg/meles-concurrent-testing</url>
+        <connection>scm:git:https://github.com/neilg/meles-concurrent-testing.git</connection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Neil Green</name>
+            <email>neil@melessoftware.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
