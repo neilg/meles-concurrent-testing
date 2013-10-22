@@ -45,3 +45,7 @@ pitest {
     timestampedReports = false
     pitestVersion = "0.31"
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
