@@ -40,6 +40,7 @@
     <scm>
         <url>https://github.com/neilg/meles-concurrent-testing</url>
         <connection>scm:git:https://github.com/neilg/meles-concurrent-testing.git</connection>
+        <developerConnection>scm:git:git@github.com:neilg/meles-concurrent-testing.git</developerConnection>
     </scm>
 
     <developers>
