@@ -1,4 +1,4 @@
-Meles Concurrent Testing
+Meles Concurrent Testing [![Build Status](https://travis-ci.org/neilg/meles-concurrent-testing.png)](https://travis-ci.org/neilg/meles-concurrent-testing)
 ========================
 
 Meles concurrent testing is a library to help with junit tests that require the use of multiple threads.
