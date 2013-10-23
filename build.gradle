@@ -44,6 +44,7 @@ pitest {
     targetClasses = ['com.melessoftware.*']
     timestampedReports = false
     pitestVersion = "0.31"
+    mutators = ['DEFAULTS','NON_VOID_METHOD_CALLS']
 }
 
 task wrapper(type: Wrapper) {
