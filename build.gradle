@@ -21,7 +21,7 @@ apply plugin: 'signing'
 group = 'com.melessoftware.testing'
 archivesBaseName = 'meles-concurrent-testing'
 version = '0.2.0-SNAPSHOT'
-ext.isReleaseVersion = !version.endsWith("-SNAPSHOT")
+ext.isReleaseVersion = !version.endsWith('-SNAPSHOT')
 
 repositories {
     mavenCentral()
@@ -69,8 +69,10 @@ pitest {
     mutators = ['DEFAULTS', 'NON_VOID_METHOD_CALLS']
 }
 
-signing {
-    sign configurations.archives
+if (isReleaseVersion) {
+    signing {
+        sign configurations.archives
+    }
 }
 
 gradle.taskGraph.whenReady { taskGraph ->
