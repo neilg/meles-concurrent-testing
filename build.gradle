@@ -14,7 +14,8 @@
  */
 
 apply plugin: 'java'
-apply plugin: "pitest"
+apply plugin: 'pitest'
+apply plugin: 'signing'
 
 repositories {
     mavenCentral()
@@ -29,7 +30,7 @@ buildscript {
     }
     dependencies {
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:0.30.0'
-        classpath "org.pitest:pitest:0.31"
+        classpath 'org.pitest:pitest:0.31'
     }
 }
 
@@ -40,11 +41,30 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '1.9.5'
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
 pitest {
     targetClasses = ['com.melessoftware.*']
     timestampedReports = false
-    pitestVersion = "0.31"
-    mutators = ['DEFAULTS','NON_VOID_METHOD_CALLS']
+    pitestVersion = '0.31'
+    mutators = ['DEFAULTS', 'NON_VOID_METHOD_CALLS']
+}
+
+signing {
+    sign configurations.archives
 }
 
 task wrapper(type: Wrapper) {
