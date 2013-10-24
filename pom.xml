@@ -20,7 +20,7 @@
 
     <groupId>com.melessoftware.testing</groupId>
     <artifactId>meles-concurrent-testing</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Meles Concurrent Testing</name>
@@ -39,7 +39,7 @@
         <url>https://github.com/neilg/meles-concurrent-testing</url>
         <connection>scm:git:https://github.com/neilg/meles-concurrent-testing.git</connection>
         <developerConnection>scm:git:git@github.com:neilg/meles-concurrent-testing.git</developerConnection>
-      <tag>meles-concurrent-testing-0.2.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
