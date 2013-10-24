@@ -194,9 +194,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <useAgent>true</useAgent>
-                        </configuration>
                     </plugin>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
