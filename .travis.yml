@@ -2,4 +2,6 @@ language: java
 install: true
 script: mvn verify
 notifications:
-  email: true
+  email:
+     on_success: always
+     on_failure: always
