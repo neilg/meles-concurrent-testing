@@ -27,6 +27,10 @@
     <description>A library to help with multi-threaded testing in junit</description>
     <url>https://github.com/neilg/meles-concurrent-testing</url>
 
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+
     <licenses>
         <license>
             <name>GNU GENERAL PUBLIC LICENSE Version 3</name>
