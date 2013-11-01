@@ -61,7 +61,7 @@ public class ThreadsTest {
             public void evaluate() throws Throwable {
                 for (int i1 = 0; i1 < testThreadsHolder.length; i1++) {
                     testThreadsHolder[i1] = localThreads.create();
-                    testThreadsHolder[i1].proceed(new Runnable() {
+                    testThreadsHolder[i1].waitFor(new Runnable() {
                         @Override
                         public void run() {
                         }

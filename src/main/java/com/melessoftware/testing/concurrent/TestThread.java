@@ -30,24 +30,24 @@ public class TestThread {
     /**
      * Run the provided {@link Runnable} on this thread and wait until it's complete.
      * If {@link Runnable#run()} throws an exception it will be rethrown, in the calling
-     * thread, by proceed.
+     * thread, by waitFor.
      *
      * @param runnable to run
      */
-    public void proceed(Runnable runnable) throws Throwable {
-        step(runnable).get();
+    public void waitFor(Runnable runnable) throws Throwable {
+        submit(runnable).get();
     }
 
     /**
      * Run the provided {@link Callable} on this thread and wait until it's complete.
      * If {@link java.util.concurrent.Callable#call()} throws an exception it will be rethrown,
-     * in the calling thread, by proceed.
+     * in the calling thread, by waitFor.
      *
      * @param callable to run
      * @return the return value from the callable
      */
-    public <X> X proceed(Callable<X> callable) throws Throwable {
-        return step(callable).get();
+    public <X> X waitFor(Callable<X> callable) throws Throwable {
+        return submit(callable).get();
     }
 
     /**
@@ -58,8 +58,8 @@ public class TestThread {
      * @param runnable to run
      * @return the result of this operation
      */
-    public Result<?> step(Runnable runnable) throws Throwable {
-        return step(callable(runnable));
+    public Result<?> submit(Runnable runnable) throws Throwable {
+        return submit(callable(runnable));
     }
 
     /**
@@ -71,7 +71,7 @@ public class TestThread {
      * @param callable to run
      * @return the result of this operation
      */
-    public <X> Result<X> step(Callable<X> callable) {
+    public <X> Result<X> submit(Callable<X> callable) {
         return new Result<>(executorService.submit(callable));
     }
 

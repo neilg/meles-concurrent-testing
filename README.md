@@ -14,29 +14,29 @@ Examples
         final TestThread threadOne = threads.create();
         final TestThread threadTwo = threads.create();
 
-        threadOne.proceed(new Runnable() {
+        threadOne.waitFor(new Runnable() {
             public void run() {
                 // this will be run in another java.lang.Thread inside threadOne
                 System.out.println("first time in threadOne");
             }
         });
 
-        System.out.println("after first threadOne.proceed");
-        // the proceed method waits until it's Runnable.run or Callable.call method completes
+        System.out.println("after first threadOne.waitFor");
+        // the waitFor method waits until it's Runnable.run or Callable.call method completes
         // so the output will be
         //   first time in threadOne
-        //   after first threadOne.proceed
+        //   after first threadOne.WaitFor
 
-        final String result = threadTwo.proceed(new Callable<String>() {
+        final String result = threadTwo.waitFor(new Callable<String>() {
             public String call() {
                 return "from threadTwo";
             }
         });
 
-        // the return value from proceed(Callable) is the return from call
+        // the return value from waitFor(Callable) is the return from call
         assertEquals(result, "from threadTwo");
 
-        threadOne.proceed(new Runnable() {
+        threadOne.waitFor(new Runnable() {
             public void run() {
                 // this exception is propagated back to the calling thread
                 throw new RuntimeException("eroyk");

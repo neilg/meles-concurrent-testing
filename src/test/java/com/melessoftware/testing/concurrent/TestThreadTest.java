@@ -33,10 +33,10 @@ public class TestThreadTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void valueIsReturnedFromProceed() throws Throwable {
+    public void valueIsReturnedFromWaitFor() throws Throwable {
         final TestThread thread = threads.create();
 
-        final String returned = thread.proceed(new Callable<String>() {
+        final String returned = thread.waitFor(new Callable<String>() {
             @Override
             public String call() {
                 return "uiwfrrf";
@@ -47,7 +47,7 @@ public class TestThreadTest {
     }
 
     @Test
-    public void exceptionIsThrowFromProceed() throws Throwable {
+    public void exceptionIsThrowFromWaitFor() throws Throwable {
         final TestThread thread = threads.create();
 
         class TestException extends RuntimeException {
@@ -55,7 +55,7 @@ public class TestThreadTest {
 
         expectedException.expect(TestException.class);
 
-        thread.proceed(new Runnable() {
+        thread.waitFor(new Runnable() {
             @Override
             public void run() {
                 throw new TestException();
