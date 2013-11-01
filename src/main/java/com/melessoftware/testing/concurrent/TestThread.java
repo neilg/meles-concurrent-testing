@@ -79,7 +79,7 @@ public class TestThread {
         executorService.shutdownNow();
     }
 
-    void awaitClosure(long timeout, TimeUnit timeUnit) throws InterruptedException {
+    void waitForTermination(long timeout, TimeUnit timeUnit) throws InterruptedException {
         executorService.awaitTermination(timeout, timeUnit);
     }
 

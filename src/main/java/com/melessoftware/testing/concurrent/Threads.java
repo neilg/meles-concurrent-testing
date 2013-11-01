@@ -62,7 +62,7 @@ public class Threads implements TestRule {
             if (waitRemainingNanos <= 0) {
                 break;
             }
-            thread.awaitClosure(waitRemainingNanos, TimeUnit.NANOSECONDS);
+            thread.waitForTermination(waitRemainingNanos, TimeUnit.NANOSECONDS);
             waitRemainingNanos = timeoutNanos - (System.nanoTime() - waitStart);
         }
     }
